@@ -1,0 +1,7 @@
+- parameters interface
+- edit logging methods
+- total abstraction classes refactoring
+- implement coverage
+- adapt github
+- event hooker
+- iframe bypass

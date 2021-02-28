@@ -1,0 +1,9 @@
+{
+  "randomName":1,
+  "port":3000,
+  "eventhk":1,
+  "documentids":["user","password","passwd","pwd","usr","fname","lname"],
+  "documentclasses":["aaa","bbb","ccc","ddd"],
+  "documenttags":["p","li","ul","title","input"],
+  "polling":3
+}

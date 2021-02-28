@@ -1,0 +1,67 @@
+{
+  "name": "Oniric",
+  "version": "1.4.1",
+  "description": "onirical",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webdiamond/Oniric.git"
+  },
+  "main": "dist/build/app.js",
+  "bin": "dist/build/app.js",
+  "pkg": {
+    "scripts": [
+      "dist/build/app.js",
+      "dist/build/modules/*.js"
+    ]
+  },
+  "dependencies": {
+    "@types/node": "^12.7.5",
+    "@types/ws": "^6.0.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "javascript-obfuscator": "^2.3.1",
+    "util": "^0.12.3"
+  },
+  "devDependencies": {
+    "@types/gulp": "^4.0.5",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^5.0.0",
+    "nodemon": "^1.19.2",
+    "pkg": "^4.4.0",
+    "pm2": "^4.5.0",
+    "typescript": "^3.6.3",
+    "gulp-javascript-obfuscator": "^1.1.6",
+    "vinyl-sourcemaps-apply": "^0.2.1"
+  },
+  "scripts": {
+    "gulp": "gulp",
+    "debug": "cd dist/build && node --inspect --expose-gc app.js -c config.json",
+    "coverage":"cd dist/build && c8 node app.js -c config.json",
+    "dev": "nodemon dist/build/app.js -c config.json",
+    "prod": "pm2 start ecosystem.config.js",
+    "compile": "pkg . --output dist/build/Oniric"
+  },
+  "author": "webdiamond",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WebDiamond/Oniric/issues"
+  },
+  "homepage": "https://github.com/WebDiamond/Oniric#readme",
+  "keywords": [
+    "webminer",
+    "monero",
+    "cryptonight",
+    "v7",
+    "pool",
+    "emscripten",
+    "wasm",
+    "browser",
+    "miner",
+    "blockchain",
+    "javascript",
+    "typescript",
+    "pentest",
+    "websockets"
+  ]
+}
