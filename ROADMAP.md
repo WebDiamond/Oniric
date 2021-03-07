@@ -59,7 +59,7 @@ che corrisponde a questa struttura ip:porta/licensekey/comando
 
 
 
-======================Problemino =======
+======================Problemino (risolto parzialmente)=======
 
 se aggiorno tramite la rest api gli elementi che andra a sniffare il nostro sniffer il suo endpoint non viene
 aggiornato perche vanno ripetute nello stesso ordine le chiamate ai metodi della classe generators all'interno del

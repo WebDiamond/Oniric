@@ -53,9 +53,6 @@ export class Generator {
         splitStrings: true,
         stringArrayThreshold: 1
       });
-      console.log('[!]',this.loader.colorStr(this.loader.color.Green,"===========Target=Code============="));
-      console.log('<script>'+b+'</script>');
-      console.log('[!]',this.loader.colorStr(this.loader.color.Green,"==================================="));
       return "<script>"+b+"</script>"
   }
   public init(): any {
