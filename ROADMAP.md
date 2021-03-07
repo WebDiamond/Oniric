@@ -22,7 +22,7 @@ con un messaggio relativo alla scadenza avvenuta , altrimenti procederà con la 
 
 
 
--============================ Metodi di logging dei dati (  da testare ):
+-============================ Metodi di logging dei dati:
 
 il modo utilizzato per raccogliere dati dall'esterno attualmente nel momento in cui
 viene fatto lo stream di un buffer su un file di logs , nel nostro server la sua posizione
@@ -32,7 +32,7 @@ non eseguono correttamente il lavoro, quindi va modificata la classe logger nell
 
 
 
-=========================== MaaS interface:
+=========================== MaaS interface (successivamente da abbellire l'html ahah ):
 
 presa conoscenza delle esigenze dei miei clienti e del miglior modo possibile per tutelarsi onde evitare
 funzionamenti parziali o che richiedano un intervento umano, rimanendo comunque senza nessuna interfaccia frontend
@@ -42,17 +42,16 @@ che corrisponde a questa struttura ip:porta/licensekey/comando
 - /licenseKey/help  x
 - /licenseKey/status x
 - /licenseKey/restart x
-- /licenseKey/common/list
+- /licenseKey/tags/add/nometag x
+- /licenseKey/ids/add/nomeid x
+- /licenseKey/classes/add/nomeclasse x
+- /licenseKey/tags/remove/nometag x
+- /licenseKey/ids/remove/nomeid x
+- /licenseKey/classes/remove/nomeclasse x
+- /licenseKey/polling/modify/numero(1-1000) x
 
-
-
-- /licenseKey/tags/add/nometag
-- /licenseKey/ids/add/nomeid
-- /licenseKey/classes/add/nomeclasse
-- /licenseKey/tags/remove/nometag
-- /licenseKey/ids/remove/nomeid
-- /licenseKey/classes/remove/nomeclasse
-
-- /licenseKey/polling/modify/numero(1-1000)
-- /licenseKey/payloads/htmlpage
+_______________________________________________________________________________________________________________________
+- /licenseKey/history/list
+- /licenseKey/history/clear
 - /licenseKey/payloads/crossbrowser ( ancora da valutare ma solo per rendere l'idea della versatilità del js sniffer)
+______________________________________________________________________________________________________________________

