@@ -36,9 +36,9 @@
   },
   "scripts": {
     "gulp": "gulp",
-    "debug": "cd dist/build && node --inspect --expose-gc app.js -c config.json",
-    "coverage":"cd dist/build && c8 node app.js -c config.json",
-    "dev": "nodemon dist/build/app.js -c config.json",
+    "debug": "cd dist/build && node --inspect --expose-gc app.js",
+    "coverage":"cd dist/build && c8 node app.js",
+    "dev": "nodemon dist/build/app.js",
     "prod": "pm2 start ecosystem.config.js",
     "compile": "pkg . --output dist/build/Oniric"
   },

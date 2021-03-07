@@ -110,16 +110,11 @@ export class Generator {
         splitStrings: true,
         stringArrayThreshold: 1
     });
-     console.log('[!]',this.loader.colorStr(this.loader.color.Cyan,'JS SNIFFER on: '+this.detectedIp+':'+this.conf.port+"/"+this.takensalt));
-     console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'Time Polling: '+this.conf.polling+'Sec'));
      console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'Wordlist Init: '+this.loader.colorStr(this.loader.color.Red,'Magento')+','+this.loader.colorStr(this.loader.color.Green,'Shopify')+','+this.loader.colorStr(this.loader.color.Blue,'Wordpress')));
      var d = this.conf.eventhk?" Enable":" Disable";
      var g = this.conf.randomName?" Enable":" Disable";
      console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'Event Hooker:')+d)
      console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'Random Name:')+g)
-     console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'HTML IDs - DocumentIds: '+this.conf.documentids))
-     console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'HTML CLASSES - DocumentClasses: '+this.conf.documentclasses))
-     console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'HTML Tags - DocumentTags: '+this.conf.documenttags))
      return a.getObfuscatedCode();
    }
 }

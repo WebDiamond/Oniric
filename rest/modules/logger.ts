@@ -22,9 +22,6 @@ export class Logger {
         console.log('[!] ',this.loader.colorStr(this.loader.color.Red,'Request Malevola o insolita:'));
         console.log('[!] ',req);
       }
-      public jsonError(): void {
-        console.log('[!] ',this.loader.colorStr(this.loader.color.Red,'Configurazione errata immettere un file config.json valido tramite -c config.json'))
-      }
       public writeLogs(data: any){
         this.fileflag = this.getFileRealPath('./logs');
         if (this.fileflag === false){
@@ -47,7 +44,7 @@ export class Logger {
                   if (err) return console.log(err);
                 });
             }
-          else if(!fs.existsSync('./logs/'+data.domain+'.log')) {
+            else if(!fs.existsSync('./logs/'+data.domain+'.log')) {
              fs.appendFile('./logs/'+data.domain+'.log',JSON.stringify(data)+"\n", (err)=> {
                 if (err) throw err;
                 this.logMessage(data);

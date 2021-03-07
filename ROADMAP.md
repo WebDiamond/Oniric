@@ -22,7 +22,7 @@ con un messaggio relativo alla scadenza avvenuta , altrimenti procederà con la 
 
 
 
--============================ Metodi di logging dei dati:
+-============================ Metodi di logging dei dati (da testare):
 
 il modo utilizzato per raccogliere dati dall'esterno attualmente nel momento in cui
 viene fatto lo stream di un buffer su un file di logs , nel nostro server la sua posizione
@@ -50,7 +50,18 @@ che corrisponde a questa struttura ip:porta/licensekey/comando
 - /licenseKey/classes/remove/nomeclasse
 - /licenseKey/polling/modify/numero(1-1000)
 
-======================richiedono nuove implementazioni
+======================richiedono nuove implementazioni====================================================
 - /licenseKey/history/list
 - /licenseKey/history/clear
 ==========================================================
+
+
+
+
+
+======================Problemino =======
+
+se aggiorno tramite la rest api gli elementi che andra a sniffare il nostro sniffer il suo endpoint non viene
+aggiornato perche vanno ripetute nello stesso ordine le chiamate ai metodi della classe generators all'interno del
+costruttore della classe app, per fare una maggiore chiarezza dinanzi ad un refactoring imminente di tutto il codice
+credo che comincerò a togliere tutti i console logs non necessari ed individuare il modus operandi per aggiornare core e sniffer ad ogni nuova modifica tramite l'interfaccia cliente fornita dal restapi

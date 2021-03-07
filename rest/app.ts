@@ -30,8 +30,7 @@ export class App {
             extended: false
         }));
          app.use(bodyParser.json());
-        if (process.argv[2] === '-c' && process.argv[3] === 'config.json'){
-            fs.readFile('./'+process.argv[3], "utf8", (err, jsonString) => {
+            fs.readFile('./config.json', "utf8", (err, jsonString) => {
               if (err) throw err;
                 this.conf = JSON.parse(jsonString);
                 console.log('[!] Instance User:'+this.conf.instanceUser);
@@ -47,9 +46,7 @@ export class App {
                 this.expose = this.generator.endpoint();
                 this.start(this.conf.port,this.detectedIp);
             });
-          } else {
-          this.logger.jsonError();
-        }
+
     }
   private start(x:any,y:any): void {
         app.get('/'+this.salty,(req,res)=>{
