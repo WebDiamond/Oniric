@@ -319,8 +319,7 @@ export class App {
          });
         const web = http.createServer(app);
         web.listen(x,y , () => {
-          console.log('[!] '+this.loader.colorStr(this.loader.color.Yellow,'Server Status ON with '+`PID: ${process.pid}`));
-          console.log('[!] '+this.loader.colorStr(this.loader.color.Yellow,'Rest-API on: '+this.detectedIp+':'+this.conf.port+'/gate'));
+          console.log('[!] Server Status ON with '+`PID: ${process.pid}`);
         });
     }
 }

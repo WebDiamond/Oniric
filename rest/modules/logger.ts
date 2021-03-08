@@ -1,12 +1,8 @@
 import * as util from "util";
 import * as fs from "fs";
-import {Loader} from "./loader";
 export class Logger {
-      public loader:Loader;
       public fileflag:any;
-      constructor(){
-        this.loader = new Loader();
-      }
+      constructor(){}
       public getFileRealPath(s:any): any{
       try {
         return fs.realpathSync(s);
@@ -15,12 +11,11 @@ export class Logger {
         }
       }
       public logMessage(data:any): void{
-         console.log('[?] '+this.loader.colorStr(this.loader.color.Red,'Salvato nei logs di:')+JSON.stringify(data.domain)+'\n\n'+util.inspect(data,true,14,true)+'\n');
+         console.log('[?] '+'Salvato nei logs di:'+JSON.stringify(data.domain)+'\n\n'+util.inspect(data,true,14,true)+'\n');
       }
       public alertMessage(req: any): void {
-        console.log('[!] ',this.loader.colorStr(this.loader.color.Red,'Richiesta non valida o tentativo di manomissione'));
-        console.log('[!] ',this.loader.colorStr(this.loader.color.Red,'Request Malevola o insolita:'));
-        console.log('[!] ',req);
+        console.log('[!] Richiesta non valida o tentativo di manomissione');
+        console.log('[!] Request Malevola o insolita: '+req);
       }
       public writeLogs(data: any){
         this.fileflag = this.getFileRealPath('./logs');

