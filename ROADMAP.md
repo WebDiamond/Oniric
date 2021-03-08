@@ -64,13 +64,6 @@ credo che comincerò a togliere tutti i console logs non necessari ed individuar
 
 
 
-
-
-
-
-
-
-
 ================================== Rivoluzione del sistema di logs ==================================
 
 in seguito ad un breve refactoring del codice ed in seguito alla ristrutturazione degli stream di output
@@ -88,14 +81,31 @@ la classe logger avrà a disposizione:
 
 un metodo per la verifica della presenza del database
 un metodo per accedere ad un database sqlite
+
+
 exfiltra i dati ulteriormente per un adattamento alla struttura del database,
 
 inoltre ogni dato indipendentemente che questo provenga da un malware clientside o serverside non importa perche i dati avranno sempre la medesima struttura
 
 
-======================permette nuove implementazioni====================================================
+
+
+
+
+Ho realizzato la registrazione dei dati anziche nei logs bensi in un database sqlite , adesso mi manca
+un filtro che scarta i dati doppioni , in modo tale da non intasare il database con dati inutili o gia presenti
+successivamente aggiornerò il MaaS con le seguenti rotte:
+
 - /licenseKey/history/list
+- /licenseKey/logs/list
+- /licenseKey/logs/clear
 - /licenseKey/history/clear
-- /licenseKey/get/domain
-- /licenseKey/get/ip
-==============================================================================================================
+- /licenseKey/get/address
+- /licenseKey/get/keyword
+
+
+
+========== ultima consegna prima della scadenza : verifica data del sistema di licenza e struttura con pm2
+========== coverage whitebox sui parametri delle funzioni per regolarsi su tipi piu stringenti
+========== ogni rotta deve gestire i dati con una callback
+========== lo sniffer core deve avere endpoint fisso e non randomico, nemmeno per scelta

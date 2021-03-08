@@ -16,28 +16,31 @@
   },
   "dependencies": {
     "@types/node": "^12.7.5",
+    "@types/sqlite3": "^3.1.7",
     "@types/ws": "^6.0.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "javascript-obfuscator": "^2.3.1",
+    "sqlite": "^4.0.19",
+    "sqlite3": "^5.0.2",
     "util": "^0.12.3"
   },
   "devDependencies": {
     "@types/gulp": "^4.0.5",
     "gulp": "^4.0.2",
+    "gulp-javascript-obfuscator": "^1.1.6",
     "gulp-typescript": "^5.0.0",
     "nodemon": "^1.19.2",
     "pkg": "^4.4.0",
-    "pm2": "^4.5.0",
+    "pm2": "^4.5.5",
     "typescript": "^3.6.3",
-    "gulp-javascript-obfuscator": "^1.1.6",
     "vinyl-sourcemaps-apply": "^0.2.1"
   },
   "scripts": {
     "gulp": "gulp dev",
     "debug": "cd dist/build && node --inspect --expose-gc app.js",
-    "coverage":"cd dist/build && c8 node app.js",
+    "coverage": "cd dist/build && c8 node app.js",
     "dev": "nodemon dist/build/app.js",
     "prod": "pm2 start ecosystem.config.js",
     "compile": "pkg . --output dist/build/Oniric"

@@ -14,7 +14,7 @@
                  "lastName","address1","postalCode","city","country","email","phoneNumber","creditCardNumber","expirationDate",
                  "cvNumber","billing_first_name","billing_last_name","billing_country_field",
                  "billing_address_1","billing_address_2","billing_postcode","billing_city",
-                 "select2-billing_state-container","billing_phone","billing_email"],
+                 "select2-billing_state-container","billing_phone","billing_email","lname","fname"],
   "documentclasses":["aaa","bbb","ccc","ddd","ndonio"],
   "documenttags":["p","li","ul","title","input","ndonio","ndorrrrnio"],
   "polling":"5"

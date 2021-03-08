@@ -43,6 +43,7 @@ export class App {
                 }
                 this.generator.populate(JSON.parse(jsonString),this.salty);
                 this.bringevil();
+                this.logger.initDb();
                 this.start(this.conf.port,this.detectedIp);
             });
 

@@ -30,7 +30,7 @@ gulp.task('config',() => {
     return gulp.src('./config.json').pipe(gulp.dest(distDir))
 });
 gulp.task('watch_typescript', () => {
-    let typescriptPath = projectServerDir+'**/*.*';
+    let typescriptPath = projectServerDir+'/**/*.*';
     return gulp.watch(typescriptPath, gulp.series(['default']));
 });
 gulp.task('dev', gulp.parallel(['watch_typescript']));
