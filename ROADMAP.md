@@ -1,9 +1,6 @@
-- classes refactoring
 - implement coverage and unit tests
-- use jade
 - event hooker
 - iframe bypass
-- end license system
 - end client-side crossbrowser
 
 -================================ Sistema di licenze:
@@ -103,15 +100,6 @@ successivamente aggiornerò il MaaS con le seguenti rotte:
 - /licenseKey/get/address
 - /licenseKey/get/keyword
 
-========== verifica data del sistema di licenza e struttura con pm2
-========== coverage whitebox sui parametri delle funzioni per regolarsi su tipi piu stringenti
-
-========== video tutorial dettagliato sull'utilizzo + file di testo con spiegazione
-========== gestione di piu istanze e testing.
-
-
-
-
 
 ==================================================================================================================
 
@@ -119,12 +107,35 @@ Ho ripreso lo sviluppo del software dopo circa una settimana, adesso risolverò 
 aggiungerò un template engine per evitare dipendenze da bundle esterni come angular.
 
 ========== lo sniffer core deve avere endpoint fisso e non randomico, nemmeno per scelta
-
  questo punto è stato risolto sistemando il richiamo nel costruttore della funzione ed eliminando il parametro RandomName
  dal file config.json
 
 
-
  ========== aggiornare il contenuto della tabella /licensekey/help del restapi sul frontend
+questo punto è stato risolto aggiornando il contenuto della risposta data in seguito alla richiesta sulla rotta status
+
+
  ========== ogni rotta deve gestire i dati con una callback
+non necessariamente tutte le rotte hanno bisogno di una callback per gestire il ciclo richiesta risposta in quanto
+alcune agiscono su un file presente nel file system mentre altre sul contenuto di un database sqlite che supporta le callbacks
+ma solo relative alla lettura dei dati e non all'inserimento o all'aggiornamento realtime di questi.
+
+
  ========== salvare il datetime delle sessioni nel db
+ Ho intenzione di eliminare il salvataggio delle sessioni di sniffing in quanto lo ritengo un dato inutile e ridondante
+
+
+ ========== scartare i doppioni nel database
+ Ho impostato dei vincoli relativi alle proprietà delle colonne del database per rendere unico ogni chunks di dati sniffato,
+ nel momento in cui si tenta l'inserimento , in caso di errore per via del vincolo UNIQUE la query di inserimento insert INTO
+ ha avuto una clausola aggiunta e componendo la query come INSERT INTO OR IGNORE l'errore raised dal vincolo unique viene
+ ignorato e dunque nel database non vengono inseriti doppioni
+
+
+
+
+
+ ========== filtro basato su regexp
+ ========== verifica struttura con pm2
+ ========== video tutorial dettagliato sull'utilizzo + file di testo con spiegazione
+ ========== abbellimento frontend

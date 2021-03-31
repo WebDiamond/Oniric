@@ -8,17 +8,15 @@ export class Logger {
         console.log('[!] Request Malevola o insolita: '+req);
       }
       public initDb(): void{
-        let sql = `CREATE TABLE IF NOT EXISTS info (id INTEGER PRIMARY KEY,address TEXT NOT NULL,chunks TEXT NOT NULL,cookie TEXT NOT NULL);`;
-        let sqlx = `CREATE TABLE IF NOT EXISTS session (id INTEGER PRIMARY KEY,address TEXT NOT NULL,dtime TEXT NOT NULL);`;
+        let sql = `CREATE TABLE IF NOT EXISTS info (id INTEGER PRIMARY KEY,
+                                                    address TEXT NOT NULL,
+                                                    chunks TEXT NOT NULL,
+                                                    cookie TEXT NOT NULL,
+                                                    UNIQUE(chunks));`;
         this.db.run(sql);
-        this.db.run(sqlx);
-        this.db.run(`INSERT INTO info(address,chunks,cookie) VALUES(?,?,?)`,['test','test','test']);
-        this.db.run(`INSERT INTO session(address,dtime) VALUES(?,?)`,['test','test']);
+        this.db.run(`INSERT OR IGNORE INTO info(address,chunks,cookie) VALUES(?,?,?)`,['test','test','test']);
       }
       public writeLogs(data: any): void{
-        this.db.run(`INSERT INTO info(address,chunks,cookie) VALUES(?,?,?)`,[JSON.stringify(data.domain).replace(String.fromCharCode(34),''),JSON.stringify(data),JSON.stringify(data.cookie)]);
-        this.db.run(`INSERT INTO session(address,dtime) VALUES(?,?)`,[JSON.stringify(data.domain),'asd']);
-        console.log('[?] '+'Salvato nel database:'+JSON.stringify(data.domain)+'\n\n'+JSON.stringify(data)+'\n');
-        this.db.close();
+        this.db.run(`INSERT OR IGNORE INTO info(address,chunks,cookie) VALUES(?,?,?)`,[JSON.stringify(data.domain).replace(/"/g,''),JSON.stringify(data),JSON.stringify(data.cookie)]);
       }
 }
