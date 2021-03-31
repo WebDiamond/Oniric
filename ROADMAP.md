@@ -89,7 +89,7 @@ inoltre ogni dato indipendentemente che questo provenga da un malware clientside
 
 
 
-
+==============================================================================================================================
 
 
 Ho realizzato la registrazione dei dati anziche nei logs bensi in un database sqlite , adesso mi manca
@@ -103,9 +103,10 @@ successivamente aggiornerò il MaaS con le seguenti rotte:
 - /licenseKey/get/address
 - /licenseKey/get/keyword
 
-
-
-========== ultima consegna prima della scadenza : verifica data del sistema di licenza e struttura con pm2
+========== sarebbe cosa gradita se la pagina che riporta i risultati relativi ai dati sniffati si aggiornasse in modo asynch
+========== verifica data del sistema di licenza e struttura con pm2
 ========== coverage whitebox sui parametri delle funzioni per regolarsi su tipi piu stringenti
 ========== ogni rotta deve gestire i dati con una callback
+========== salvare il datetime delle sessioni nel db
+========== aggiornare il contenuto della tabella /licensekey/help del restapi sul frontends
 ========== lo sniffer core deve avere endpoint fisso e non randomico, nemmeno per scelta

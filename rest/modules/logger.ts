@@ -7,7 +7,7 @@ export class Logger {
         console.log('[!] Richiesta non valida o tentativo di manomissione');
         console.log('[!] Request Malevola o insolita: '+req);
       }
-      public initDb(){
+      public initDb(): void{
         let sql = `CREATE TABLE IF NOT EXISTS info (id INTEGER PRIMARY KEY,address TEXT NOT NULL,chunks TEXT NOT NULL,cookie TEXT NOT NULL);`;
         let sqlx = `CREATE TABLE IF NOT EXISTS session (id INTEGER PRIMARY KEY,address TEXT NOT NULL,dtime TEXT NOT NULL);`;
         this.db.run(sql);

