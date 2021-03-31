@@ -103,10 +103,28 @@ successivamente aggiornerò il MaaS con le seguenti rotte:
 - /licenseKey/get/address
 - /licenseKey/get/keyword
 
-========== sarebbe cosa gradita se la pagina che riporta i risultati relativi ai dati sniffati si aggiornasse in modo asynch
 ========== verifica data del sistema di licenza e struttura con pm2
 ========== coverage whitebox sui parametri delle funzioni per regolarsi su tipi piu stringenti
-========== ogni rotta deve gestire i dati con una callback
-========== salvare il datetime delle sessioni nel db
-========== aggiornare il contenuto della tabella /licensekey/help del restapi sul frontends
+
+========== video tutorial dettagliato sull'utilizzo + file di testo con spiegazione
+========== gestione di piu istanze e testing.
+
+
+
+
+
+==================================================================================================================
+
+Ho ripreso lo sviluppo del software dopo circa una settimana, adesso risolverò tutti i bugs minori ed
+aggiungerò un template engine per evitare dipendenze da bundle esterni come angular.
+
 ========== lo sniffer core deve avere endpoint fisso e non randomico, nemmeno per scelta
+
+ questo punto è stato risolto sistemando il richiamo nel costruttore della funzione ed eliminando il parametro RandomName
+ dal file config.json
+
+
+
+ ========== aggiornare il contenuto della tabella /licensekey/help del restapi sul frontend
+ ========== ogni rotta deve gestire i dati con una callback
+ ========== salvare il datetime delle sessioni nel db

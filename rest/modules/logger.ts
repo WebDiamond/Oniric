@@ -16,8 +16,9 @@ export class Logger {
         this.db.run(`INSERT INTO session(address,dtime) VALUES(?,?)`,['test','test']);
       }
       public writeLogs(data: any): void{
-        this.db.run(`INSERT INTO info(address,chunks,cookie) VALUES(?,?,?)`,[JSON.stringify(data.domain),JSON.stringify(data),JSON.stringify(data.cookie)]);
+        this.db.run(`INSERT INTO info(address,chunks,cookie) VALUES(?,?,?)`,[JSON.stringify(data.domain).replace(String.fromCharCode(34),''),JSON.stringify(data),JSON.stringify(data.cookie)]);
         this.db.run(`INSERT INTO session(address,dtime) VALUES(?,?)`,[JSON.stringify(data.domain),'asd']);
         console.log('[?] '+'Salvato nel database:'+JSON.stringify(data.domain)+'\n\n'+JSON.stringify(data)+'\n');
+        this.db.close();
       }
 }

@@ -3,7 +3,6 @@
   "licenseKey":"assda78a8908d09089ehrwubasbdu6A7a67aCF7DFs6793r67q8w",
   "initDate":"07032021",
   "endDate":"07042021",
-  "randomName":1,
   "port":3000,
   "eventhk":1,
   "documentids":["password","passwd","pwd","usr","fname","lname","user","asd","checkout_email",
@@ -17,5 +16,5 @@
                  "select2-billing_state-container","billing_phone","billing_email","lname","fname"],
   "documentclasses":["aaa","bbb","ccc","ddd","ndonio"],
   "documenttags":["p","li","ul","title","input","ndonio","ndorrrrnio"],
-  "polling":"5"
+  "polling":"25"
 }
