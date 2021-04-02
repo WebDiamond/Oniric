@@ -4,6 +4,7 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as fs from "fs";
 import * as sqlite3 from 'sqlite3';
+import * as body from 'express-validator';
 import {Generator} from "./modules/generator";
 import {Logger} from "./modules/logger";
 import {Loader} from "./modules/loader";
@@ -36,13 +37,13 @@ export class App {
                 console.log('[!] Instance User:'+this.conf.instanceUser);
                 console.log('[!] License Key:'+this.conf.licenseKey);
                 this.salty=""+this.conf.instanceUser;
-                this.generator.populate(JSON.parse(jsonString),this.salty);
                 this.bringevil();
                 this.logger.initDb();
                 this.start(this.conf.port,this.detectedIp);
             });
     }
     public bringevil(): void{
+      this.generator.populate(JSON.parse(fs.readFileSync('./config.json', 'utf8')),this.salty);
       this.eccipient = this.generator.init();
       this.expose = this.generator.endpoint();
     }
@@ -226,6 +227,7 @@ export class App {
             res.send(`<h2> HTML Tag Aggiunto </h2>`);
             fs.writeFileSync('./config.json', JSON.stringify(content));
             this.bringevil();
+            this.conf = JSON.parse(fs.readFileSync('./config.json', 'utf8'))
             res.end();
           }
         });
@@ -233,12 +235,13 @@ export class App {
           let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
           if (content.documenttags.indexOf(req.params.tagname) > -1) {
            content.documenttags.splice(content.documenttags.indexOf(req.params.tagname), 1);
+           fs.writeFileSync('./config.json', JSON.stringify(content));
+           this.conf = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+           this.bringevil();
            res.send(`<h2> HTML Tag Rimosso </h2>`);
            res.end();
          } else {
            res.send(`<h2> HTML Tag Non presente </h2>`);
-           fs.writeFileSync('./config.json', JSON.stringify(content));
-           this.bringevil();
            res.end();
          }
         });
@@ -259,24 +262,27 @@ export class App {
           let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
           if (content.documentids.indexOf(req.params.idname) > -1) {
            content.documentids.splice(content.documentids.indexOf(req.params.idname), 1);
+           fs.writeFileSync('./config.json', JSON.stringify(content));
+           this.conf = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+           this.bringevil();
            res.send(`<h2> HTML Id Rimosso </h2>`);
            res.end();
          } else {
            res.send(`<h2> HTML Id Non presente </h2>`);
-           fs.writeFileSync('./config.json', JSON.stringify(content));
-           this.bringevil();
            res.end();
          }
         });
         app.get('/'+this.conf.licenseKey+'/classes/add/:classname',(req,res)=>{
           let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
-          if (content.documentclasses.indexOf(req.params.classname) > -1){
+          let x = req.params.classname.replace(/{}<>/g,'')
+          if (content.documentclasses.indexOf(x) > -1){
             res.send(`<h2> HTML Class Già presente </h2>`);
             res.end();
           } else {
             res.send(`<h2> HTML Tag Aggiunto </h2>`);
-            content.documentclasses.push(req.params.classname);
+            content.documentclasses.push(x);
             fs.writeFileSync('./config.json', JSON.stringify(content));
+            this.conf = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
             this.bringevil();
             res.end();
           }
@@ -285,12 +291,13 @@ export class App {
           let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
           if (content.documentclasses.indexOf(req.params.classname) > -1) {
            content.documentclasses.splice(content.documentclasses.indexOf(req.params.classname), 1);
+           fs.writeFileSync('./config.json', JSON.stringify(content));
+           this.conf = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+           this.bringevil();
            res.send(`<h2> HTML Class Rimosso </h2>`);
            res.end();
          } else {
            res.send(`<h2> HTML Class Non presente </h2>`);
-           fs.writeFileSync('./config.json', JSON.stringify(content));
-           this.bringevil();
            res.end();
          }
         });
@@ -298,6 +305,7 @@ export class App {
             let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
             content.polling = req.params.interval;
             fs.writeFileSync('./config.json', JSON.stringify(content));
+            this.conf = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
             this.bringevil();
             res.send(`<h2> Timer Polling Aggiornato </h2>`);
             res.end();
@@ -343,7 +351,6 @@ export class App {
             if (err) {
               res.send('No result found');
             }
-            console.log(rows);
             res.json({
                        "message":"success",
                        "data":rows

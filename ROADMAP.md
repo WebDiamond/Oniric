@@ -135,7 +135,6 @@ ma solo relative alla lettura dei dati e non all'inserimento o all'aggiornamento
 
 
 
- ========== filtro basato su regexp
  ========== verifica struttura con pm2
  ========== video tutorial dettagliato sull'utilizzo + file di testo con spiegazione
- ========== abbellimento frontend
+ ========== abbellimento frontend interfaccia e notifiche
