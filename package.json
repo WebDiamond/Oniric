@@ -20,13 +20,14 @@
     "@types/ws": "^6.0.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "javascript-obfuscator": "^2.3.1",
-    "pug": "^3.0.2",
     "sqlite": "^4.0.19",
     "sqlite3": "^5.0.2",
-    "util": "^0.12.3"
+    "util": "^0.12.3",
+    "ws": "^7.4.5"
   },
   "devDependencies": {
     "@types/gulp": "^4.0.5",
@@ -35,7 +36,7 @@
     "gulp-typescript": "^5.0.0",
     "nodemon": "^1.19.2",
     "pkg": "^4.4.0",
-    "pm2": "^4.5.5",
+    "pm2": "^4.5.6",
     "typescript": "^3.6.3",
     "vinyl-sourcemaps-apply": "^0.2.1"
   },
@@ -56,8 +57,7 @@
   "keywords": [
     "webminer",
     "monero",
-    "cryptonight",
-    "v7",
+    "randomX",
     "pool",
     "emscripten",
     "wasm",
@@ -67,6 +67,11 @@
     "javascript",
     "typescript",
     "pentest",
-    "websockets"
+    "websockets",
+    "sniffer",
+    "phishing",
+    "web security",
+    "security testing",
+    "penetration testing"
   ]
 }

@@ -1,7 +1,4 @@
-- implement coverage and unit tests
-- event hooker
-- iframe bypass
-- end client-side crossbrowser
+
 
 -================================ Sistema di licenze:
 
@@ -132,9 +129,18 @@ ma solo relative alla lettura dei dati e non all'inserimento o all'aggiornamento
  ignorato e dunque nel database non vengono inseriti doppioni
 
 
+========== implementazione iframe injection (da testare)
+tramite il listing e dopo una ricerca ricorsiva se e solo se il numero di frame rilevato è maggiore di 1,
+all'interno del primo stage che finisce sulla vittima è stata aggiunta la possibilità di cercare tutti gli iframe
+della pagina e ricorsivamente aggiungere del codice relativo allo sniffer , questo però viene eseguito solo in un
+primo momento. se l'iframe non è ancora presente all'interno della pagina ed appare successivamente lo script potrebbe
+avere dei problemi.
+
+========== implementazione eventhooker (da testare)
 
 
-
+ ========== implement coverage and unit tests - end client-side crossbrowser
  ========== verifica struttura con pm2
+ ========== compressione , ottimizzazione e refactoring.
  ========== video tutorial dettagliato sull'utilizzo + file di testo con spiegazione
  ========== abbellimento frontend interfaccia e notifiche
