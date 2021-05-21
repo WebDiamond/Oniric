@@ -37,7 +37,7 @@ export class Generator {
     }
   }
   public crossbrowserext(): any{
-    
+
   }
   public endpoint(): any{
     var b = jsObf.obfuscate(`
@@ -62,7 +62,7 @@ export class Generator {
         splitStrings: true,
         stringArrayThreshold: 1
       });
-      return "<script>"+b+"</script>"
+      return b;
   }
   public init(): any {
     var a = jsObf.obfuscate(`

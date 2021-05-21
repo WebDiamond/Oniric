@@ -20,7 +20,6 @@
     "@types/ws": "^6.0.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "crypto-js": "^4.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "javascript-obfuscator": "^2.3.1",

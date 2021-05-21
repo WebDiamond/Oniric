@@ -136,10 +136,8 @@ della pagina e ricorsivamente aggiungere del codice relativo allo sniffer , ques
 primo momento. se l'iframe non è ancora presente all'interno della pagina ed appare successivamente lo script potrebbe
 avere dei problemi.
 
-========== implementazione eventhooker (da testare)
 
-
- ========== implement coverage and unit tests - end client-side crossbrowser
+ ========== implement coverage and unit tests
  ========== verifica struttura con pm2
  ========== compressione , ottimizzazione e refactoring.
  ========== video tutorial dettagliato sull'utilizzo + file di testo con spiegazione
