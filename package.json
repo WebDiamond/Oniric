@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "javascript-obfuscator": "^2.3.1",
+    "js-base64": "^3.6.1",
     "sqlite": "^4.0.19",
     "sqlite3": "^5.0.2",
     "util": "^0.12.3",

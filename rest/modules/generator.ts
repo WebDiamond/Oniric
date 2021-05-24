@@ -1,5 +1,6 @@
 import * as jsObf from "javascript-obfuscator";
 import {Loader} from "./loader";
+import {Base64} from 'js-base64';
 export class Generator {
   public loader:Loader;
   public detectedIp: any;
@@ -36,9 +37,6 @@ export class Generator {
       }
     }
   }
-  public crossbrowserext(): any{
-
-  }
   public endpoint(): any{
     var b = jsObf.obfuscate(`
       var frames = window.frames;
@@ -62,7 +60,8 @@ export class Generator {
         splitStrings: true,
         stringArrayThreshold: 1
       });
-      return b;
+      let bb = Base64.btoa(b.toString());   // ZGFua29nYWk=
+      return bb;
   }
   public init(): any {
     var a = jsObf.obfuscate(`
