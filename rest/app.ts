@@ -94,7 +94,7 @@ a {text-align: center;text-decoration: none;color: #FFF; }
             <div class="panel" id="fade2">
                 <div class="panel__content">
                 <p>Website Payload (Server-Side)</p>
-                <p> `+this.expose+` </p>
+                <textarea style="width:400px;height:150px"> `+this.expose+` </textarea>
                 </div>
                 <a href="/`+this.conf.licenseKey+`"> Close [ X ]</a>
             </div>
