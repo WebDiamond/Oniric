@@ -1,4 +1,7 @@
-# Oniric ![logo](https://github.com/WebDiamond/Oniric/blob/main/logo.png)
+# Oniric 
+
+
+![logo](https://github.com/WebDiamond/Oniric/blob/main/logo.png)
 
 Oniric is a Restapi for Post-Exploitation in Web application
 via XSS Stored and RFI
@@ -65,8 +68,8 @@ I'm not responsable for any use of this application.
 
 ## Screenshot
 
-![Image of Oniric logo](https://github.com/WebDiamond/Oniric/blob/main/proof.png)
-![Image of Oniric logo](https://github.com/WebDiamond/Oniric/blob/main/proof2.png)
+![Screenshot 1](https://github.com/WebDiamond/Oniric/blob/main/proof.png)
+![Screenshot 2](https://github.com/WebDiamond/Oniric/blob/main/proof2.png)
 
 ## Contributing
 
